@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Adote seu pet!</title>
+
+	<link rel="stylesheet" href="./css/main.css" />
+</head>
+<body>
+	<main>
+		<section class="section-contact">
+			<div class="container">
+				<h1>Adote seu Pet!</h1>
+				<p>Já pensou no quão triste ficam os animais quando são abandonados? Podem ser animais, mas eles também tem sentimentos. Ter um pet na sua casa é um sentimento muito bom. Tenha um pet na sua casa</p>
+
+				<form>
+					<div class="form-group">
+						<label for="firstname">Nome Completo*</label>
+						<input 
+							type="text" 
+							name="firstname" 
+							id="firstname" 
+							required 
+							class="form-element"
+							placeholder="Digite seu Nome Completo" />
+					</div>
+					
+					<div class="form-group">
+						<label for="email">E-mail*</label>
+						<input type="email" name="email" id="email" required class="form-element" placeholder="Digite seu E-mail" />
+					</div>
+					<div class="form-group">
+						<label for="company">Senha*</label>
+						<input type="password" name="company" id="company" class="form-element" placeholder="Digite sua Senha" />
+					</div>
+					<div class="form-group full">
+						<label for="message">Motivo*</label>
+						<textarea name="message" id="message" class="form-element" placeholder="Eu quero adotar esse pet porque..."></textarea>
+					</div>
+					<div class="submit-group">
+						<input type="submit" value="CADASTRAR" />
+					</div>
+				</form>
+			</div>
+		</section>
+	</main>
+</body>
+</html>
