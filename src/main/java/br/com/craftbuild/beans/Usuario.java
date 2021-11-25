@@ -23,8 +23,8 @@ public class Usuario {
 	private String email;
 	@Column(name="motivo", length=250)
 	private String motivo;
-//	@Column(name="desc", length=250)
-//	private String desc;
+
+	
 	public int getId() {
 		return id;
 	}

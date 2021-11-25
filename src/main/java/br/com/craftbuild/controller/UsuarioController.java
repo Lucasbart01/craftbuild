@@ -3,6 +3,7 @@ package br.com.craftbuild.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,35 +20,58 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioDAO dao;
 
-	@GetMapping("/index")
+	
+	//Chamando página de login
+	@GetMapping("/login")
 	public String index() {
+	
 		return "login";
 	}
 	
-	@PostMapping("/login")
+
+	@PostMapping("/login/entry")
 	public ResponseEntity<Usuario> getAllByEmailAndSenha(@RequestBody Usuario usuario) {
 		System.out.println(usuario);
 		System.out.println("Email: " + usuario.getEmail());
 		System.out.println("Senha: " + usuario.getSenha());
 		Usuario resposta = dao.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
-
-//		if(resposta == null) { return ResponseEntity.status(404).build();}
+	
 		System.out.println(resposta);
 		return ResponseEntity.ok(resposta);
 	}
 
-	@GetMapping("/usuarios")
-	public ResponseEntity<List<Usuario>> getAll() {
-		List<Usuario> list = (List<Usuario>) dao.findAll();
+	
+	//Select
+	 @GetMapping("/user")
+	    public String showUpdateForm(Model model) {
+	        model.addAttribute("users", dao.findAll());
+	        return "area";
+	    }
+	
+	
+	
+//	 @GetMapping("/user/{id}")
+//    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+//		 
+//        model.addAttribute("users", dao.findById(id));
+//        return "area";
+//    }
+//
 
-		if (list.size() == 0) {
-			return ResponseEntity.status(404).build();
-		}
 
-		return ResponseEntity.ok(list);
-
-	}
-
+	 //Delete
+	 @GetMapping("delete/{id}")
+	    public String deleteStudent(@PathVariable("id") int id, Model model) {
+	        Usuario usuario = dao.findById(id)
+	            .orElseThrow(() -> new IllegalArgumentException("ID de usuário inválido:" + id));
+	        dao.delete(usuario);
+	        model.addAttribute("users", dao.findAll());
+	        return "area";
+	    }
+	 
+	
+//////////////////////////////////
+////////COMANDOS PARA TESTE///////
 	@GetMapping("/usuarios/{userId}")
 	public ResponseEntity<Usuario> getAllById(@PathVariable("userId") int id) {
 		Usuario listId = dao.findById(id).orElse(null);
@@ -58,18 +82,7 @@ public class UsuarioController {
 
 		return ResponseEntity.ok(listId);
 	}
-
-	@PostMapping("/usuarios/add/")
-	public ResponseEntity<Usuario> getSave(@RequestBody Usuario usuario) {
-		try {
-			dao.save(usuario);
-			return ResponseEntity.ok(usuario);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(404).build();
-		}
-	}
+	
 
 	@PostMapping("/loginPostman")
 	public ResponseEntity<Usuario> getAllByEmailAndSenha1(@RequestBody Usuario usuario) {
