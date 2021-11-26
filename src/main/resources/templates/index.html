@@ -14,13 +14,14 @@
 				<h1>Adote seu Pet!</h1>
 				<p>Já pensou no quão triste ficam os animais quando são abandonados? Podem ser animais, mas eles também tem sentimentos. Ter um pet na sua casa é um sentimento muito bom. Tenha um pet na sua casa</p>
 
-				<form>
+				<form action="#" th:action="@{/add}" th:object="${user}" method="POST">
 					<div class="form-group">
 						<label for="firstname">Nome Completo*</label>
 						<input 
 							type="text" 
 							name="firstname" 
-							id="firstname" 
+							id="firstname"
+							th:field="*{nome}" 
 							required 
 							class="form-element"
 							placeholder="Digite seu Nome Completo" />
@@ -28,15 +29,15 @@
 					
 					<div class="form-group">
 						<label for="email">E-mail*</label>
-						<input type="email" name="email" id="email" required class="form-element" placeholder="Digite seu E-mail" />
+						<input type="email" th:field="*{email}" name="email" id="email" required class="form-element" placeholder="Digite seu E-mail"/>
 					</div>
 					<div class="form-group">
 						<label for="company">Senha*</label>
-						<input type="password" name="company" id="company" class="form-element" placeholder="Digite sua Senha" />
+						<input type="password" th:field="*{senha}" name="company" id="company" class="form-element" placeholder="Digite sua Senha" />
 					</div>
 					<div class="form-group full">
 						<label for="message">Motivo*</label>
-						<textarea name="message" id="message" class="form-element" placeholder="Eu quero adotar esse pet porque..."></textarea>
+						<textarea name="message" th:field="*{motivo}" id="message" class="form-element" placeholder="Eu quero adotar esse pet porque..."></textarea>
 					</div>
 					<div class="submit-group">
 						<input type="submit" value="CADASTRAR" />

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,13 @@ public class UsuarioController {
 	        model.addAttribute("users", dao.findAll());
 	        return "area";
 	    }
+	 
+	 //Create
+	 @PostMapping("/add")
+	 public String Cadastro(@ModelAttribute("user") Usuario user) { 
+		 user.save(user);
+		 return "redirect:/index";
+	 }
 	 
 	
 	
