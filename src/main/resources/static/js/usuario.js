@@ -81,13 +81,13 @@ function atualizar(){
     fetch("http://localhost:8080/update/{id}", cabecalho)
         .then(res => res.json())
         .then(res => {
-            localStorage.setItem("cadastrar",JSON.stringify(res));
+            localStorage.setItem("erro ao atualizar",JSON.stringify(res));
             //window.location="user";
 
         })
         .catch(err => {
 			console.log(err);
-            window.alert("Erro ao cadastrar");
+            window.alert("Erro ao atualizar");
         });
 	
 	

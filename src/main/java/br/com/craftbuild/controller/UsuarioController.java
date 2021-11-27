@@ -48,7 +48,6 @@ public class UsuarioController {
 			return "update";
 		}
 		
-	
 
 	@PostMapping("/login/entry")
 	public ResponseEntity<Usuario> getAllByEmailAndSenha(@RequestBody Usuario usuario) {
@@ -100,8 +99,6 @@ public class UsuarioController {
 			
 		}
 	 
-	
-
 	 //Delete
 	 @GetMapping("delete/{id}")
 	    public String deleteStudent(@PathVariable("id") int id, Model model) {
@@ -113,29 +110,4 @@ public class UsuarioController {
 	    }
 	 
 	
-//////////////////////////////////
-////////COMANDOS PARA TESTE///////
-	@GetMapping("/usuarios/{userId}")
-	public ResponseEntity<Usuario> getAllById(@PathVariable("userId") int id) {
-		Usuario listId = dao.findById(id).orElse(null);
-
-		if (listId == null) {
-			return ResponseEntity.status(404).build();
-		}
-
-		return ResponseEntity.ok(listId);
-	}
-	
-
-	@PostMapping("/loginPostman")
-	public ResponseEntity<Usuario> getAllByEmailAndSenha1(@RequestBody Usuario usuario) {
-		Usuario resposta = dao.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
-
-		if (resposta == null) {
-			return ResponseEntity.status(404).build();
-		}
-		System.out.println(resposta);
-		return ResponseEntity.ok(resposta);
-	}
-
 }
