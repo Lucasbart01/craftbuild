@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 import br.com.craftbuild.beans.Usuario;
 import br.com.craftbuild.dao.UsuarioDAO;
@@ -25,17 +28,26 @@ public class UsuarioController {
 
 	//Chamando página de cadastro
 		@GetMapping("/cadastro")
-		public String cadastro() {
+		public String cadastro(Usuario user) {
 		
 			return "index";
 		}
 		
+		
 	//Chamando página de login
 	@GetMapping("/login")
-	public String index() {
+	public String login() {
 	
 		return "login";
 	}
+	
+	//Chamando página de update
+		@GetMapping("/edit/{id}")
+		public String update() {
+		
+			return "update";
+		}
+		
 	
 
 	@PostMapping("/login/entry")
@@ -57,24 +69,38 @@ public class UsuarioController {
 	        return "area";
 	    }
 	 
+	 
 	 //Create
 	 @PostMapping("/add")
-	 public String Cadastro(@ModelAttribute("user") Usuario user) { 
-		 user.save(user);
-		 return "redirect:/index";
-	 }
+		public ResponseEntity<Usuario> getSave(@RequestBody Usuario usuario) {
+			try {
+				dao.save(usuario);
+				return ResponseEntity.ok(usuario);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(404).build();
+			}
+		}
+	 
+	 
+	 //Update
+	 
+	 @PutMapping("/update/{id}")
+		public ResponseEntity<Usuario> getUpdate(@PathVariable Integer id, @RequestBody Usuario user) {
+		 return dao.findById(id)
+				 .map(usuario -> {
+					 usuario.setNome(user.getNome());
+					 usuario.setEmail(user.getEmail());
+					 usuario.setSenha(user.getSenha());
+					 usuario.setMotivo(user.getMotivo());
+					 Usuario userUpdate = dao.save(usuario);
+					 return ResponseEntity.ok().body(userUpdate);
+				 }).orElse(ResponseEntity.notFound().build());
+			
+		}
 	 
 	
-	
-	
-//	 @GetMapping("/user/{id}")
-//    public String showUpdateForm(@PathVariable("id") int id, Model model) {
-//		 
-//        model.addAttribute("users", dao.findById(id));
-//        return "area";
-//    }
-//
-
 
 	 //Delete
 	 @GetMapping("delete/{id}")
